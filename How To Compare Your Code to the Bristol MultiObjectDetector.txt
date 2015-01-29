@@ -1,0 +1,90 @@
+University of Bristol
+Visual Information Laboratory
+
+Bristol's Real-Time Texture-less Multi-Object Detector: A Scalable Approach
+v 1.1 - May 2013
+
+----------------------------------
+
+Introduction:
+
+The multi-object-detection package enables you to learn multiple texture-less objects in real-time and use the codebook to recognise these objects at multiple frames per second.
+
+For further details, using the code or comparing your method, kindly cite:
+*****************************************************************************
+*****************************************************************************
+***   Dima Damen, Pished Bunnun, Andrew Calway and Walterio Mayol-Cuevas  ***
+***   Real-time Learning and Detection of 3D Texture-less Objects:        ***
+***   A Scalable Approach.						  ***
+***   In. Proc. of. British Machine Vision Conference (BMVC), 2012.       ***
+*****************************************************************************
+*****************************************************************************
+
+Note: Detection is on a per-frame basis. This should be used as the initialisation for a tracker. Currently, no information is being fed between frames.
+
+------------------------------------
+
+Important Note: The Bristol MultiObjDetector aims to operate in real-time, and does not exhaustively test all edges in the image. The search is set to a maximum time limit, and the frame is abandoned at the end of the maximum time. The number of frames processed per second can vary from 1 up to 17fps, using a slider added to the interface. The method thus cannot exceed the state-of-the-art exhaustive shape-based detectors. Please refer to our BMVC paper above for comparison on the ETHZ dataset.
+
+-------------------------------------
+
+Part I: Running the detector from a recorded sequence
+=====================================================
+
+1. Record the sequence
+
+Option1: Record a sequence and use it for comparing the two methods
+-------
+Record the sequence using the command "rosbag record" (Ref: http://www.ros.org/wiki/rosbag/Commandline)
+For example, to record a sequence from a usb camera
+Run the detector as specified in Run Bristol MultiObjectDetector.txt
+open ANOTHER ROS temrinal (Part I from the Run Bristol MultiObjectDetector.txt)
+$ rosbag record -o /<some path>/recordedBag /usb_cam/image_rect_color
+
+Option2: Compare using an already recorded AVI
+--------
+You can use OpenCV to convert an AVI to a bag file
+
+2. Run the detector from a ROS bag
+
+You need two running ROS terminals
+Terminal 1: choose the correct launch script depending on your camera type
+-----------
+$ roslaunch mod_base demo_<camera type>.launch 
+
+Terminal 2: run rosbag (Ref: http://www.ros.org/wiki/rosbag/Commandline)
+-----------
+$ rosbag play /<some path>/recordedBag
+
+------------------------------------
+
+Part II: Saving the results
+============================
+
+Option1: Comparing bounding boxes
+--------
+In running the system, change the value of the parameter "WriteToFile" (in the launch file) to a filename (full path)
+At the end of running the detector on your recorded sequence, the output file is space-delimited with the format:
+<seqNo> <timestamp> <objID> <x> <y> <width> <height>
+where:
+<seqNo>: sequential frame count from the start of the sequence
+<timestamp>: as retrieved from the bag file's header
+<objID>: The order of the object during learning - starting from 0
+<x> <y> <width> <height>: region of interest representing the object (i.e. bounding boxes)
+
+Option2: Comparing exact edge pixels
+--------
+Our method does not only detect bounding boxes, but also localises the exact edges representing the object.
+To retrieve the edge pixels, for comparison, you need to:
+1. set the parameter "PublishResults" to "PUBLISH" in the launch script
+2. the exact edge pixels will be outputted as a ROS message of time mod_base/DetectedObjectArray
+The details of this message can be found at Help_Detected_Object_message.txt
+
+------------------------------------
+
+For help and further information, contact:
+Dr. Dima Damen
+Department of Computer Science,
+University of Bristol
+http://www.cs.bris.ac.uk/~damen
+email: damen@cs.bris.ac.uk

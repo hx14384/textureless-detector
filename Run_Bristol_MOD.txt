@@ -1,0 +1,126 @@
+University of Bristol
+Visual Information Laboratory
+
+Bristol's Real-Time Texture-less Multi-Object Detector: A Scalable Approach
+v 1.1 - May 2013
+
+----------------------------------
+
+Introduction:
+
+The multi-object-detection package enables you to learn multiple texture-less objects in real-time and use the codebook to recognise these objects at multiple frames per second.
+
+For further details, using the code or comparing your method, kindly cite:
+*****************************************************************************
+*****************************************************************************
+***   Dima Damen, Pished Bunnun, Andrew Calway and Walterio Mayol-Cuevas  ***
+***   Real-time Learning and Detection of 3D Texture-less Objects:        ***
+***   A Scalable Approach.						  ***
+***   In. Proc. of. British Machine Vision Conference (BMVC), 2012.       ***
+*****************************************************************************
+*****************************************************************************
+
+Note: Detection is on a per-frame basis. This should be used as the initialisation for a tracker. Currently, no information is being fed between frames.
+
+-----------------------------------
+
+--- Refer to the Install.txt file for installation instructions prior to running the code
+
+-----------------------------------
+
+*****************************************************************************
+*****************************************************************************
+***                                                                       ***
+***   Watch video for how the demo runs at:                               ***
+***   http://youtu.be/4rPjN1mcKGc                                         ***
+***                                                                       ***  
+*****************************************************************************
+*****************************************************************************
+
+Part II: Run the detector
+==========================
+
+1. open a terminal then specify the source file, where <loc1> is the full path of your installation's location
+
+$ source <loc1>/setup.bash
+
+2. In the directory <loc1>/mod/mod_base/launch open the launch script depending on your choice of camera. Three launch scripts are provided
+demo_usb.launch -- for using a usb camera
+demo_firewire.launch -- for using a firewire camera
+demo_rgbd.launch -- for using a Kinect or Asus Xtion sensor
+
+3. The detector assumes undistorted images. A sample calibration file is provided with the code, but this is unlikely to suit your camera. You can calibrate your camera using the ROS framework (http://www.ros.org/wiki/camera_calibration). The resulting .yaml file should be specified in the launch script.
+
+name: camera_info_url     value:"file://<full path>/camera.yaml" />
+
+4. If running a usb camera, make sure to change the parameter
+
+name: video_device        value: "/dev/video0" for desktops without a webcam, "/dev/video0" for the laptop's builtin webcam, "/dev/video1" for laptop's extra usb camera
+
+5. Make sure your camera is plugged and images can be read from it using a standard software. Check the device's permissions if you face difficulties here.
+
+6. Start the launch script as follows:
+
+Option 1: USB Camera
+---------
+$ roslaunch mod_base demo_usb.launch
+
+Option 2: Firewire Camera
+---------
+$ roslaunch mod_base demo_firewire.launch
+
+Option 3: Kinect or Asus sensor
+---------
+$ roslaunch mod_base demo_rgbd.launch
+
+6. Learn one or more objects
+
+Place the object on an empty background in the centre of the image
+Press the space button to start learning
+Press the space button again to stop learning
+Click 'N' to learn the next object
+
+-- The code is suitable for learning mainly/majorly Textureless objects - not highly textured objects which have plenty of internal edges. These are not suitable for this method
+-- The demo can learn up to 30 different objects
+
+7. Test the object detection by placing the object in some clutter.
+Notes:
+- the method is scalable as more objects are learnt
+- the method can detect the object within medium-level clutter (70% of the edges in the image should belong to clutter at max) - Ref: BMVC2012 paper
+- the method is rotation and scale invariant
+- the method can recognise an object up to 40% occlusion. When more than 60% of the object is occluded, the method does not recognise the object to avoid hallucinations
+
+8. At the end, close the interface window, the method automatically saves the output to a default file (result.eod.bin). Wait for the codebook to be written successfully before closing the terminal
+see Part VI to change the default value or load an already learnt codebook
+
+-------------------------------------
+
+Part II: Options
+================
+
+1. In the launch file, you may change the parameters as follows:
+
+param: rgb_image             value: rostopic publishing rectified rgb images
+param: LoadCodebookFilename  value: full path of file containing the initial codebook - default: empty string
+param: CodebookFilename      value: full path of file containing the saved codebook
+param: Interaface            value: "SHOW" to load the interface. This is the default option when learning objects. When loading from a learnt codebook, this option could be changed to "NOSHOW"
+param: PublishResults        value: "PUBLISH" to publish the images containing the detection, and messages containing the detected objects, as ROS messages
+param: WriteToFile           value: full path of file to which the detected objects will be written - if empty, nothing will be written
+param: LearnObjNo            value: "objN" where N is the starting ID of the object to be learnt
+param: PathShape             value: "NOSTAR" when using paths, "STAR" otherwise
+
+2. When the parameter PublishResults is set to "PUBLISH", the detector publishes images containing the detections as a ROS topic named: /MultiObjDetector/detectionImage
+This can be viewed in another terminal by running another ROS terminal (Part I) then running
+$ rosrun image_view image_view image:=/MultiObjDetector/detectionImage
+
+3. When the parameter PublishResults is set to "PUBLISH", the detector publishes special ros messages (of type mod_base/DetectedObjectArray) as a ROS topic named: /MultiObjDetector/detectedObjects
+-- Refer to file Help_Detected_Object_message.txt for details
+
+------------------------------------
+
+For help and further information, contact:
+Dr. Dima Damen
+Department of Computer Science,
+University of Bristol
+http://www.cs.bris.ac.uk/~damen
+email: damen@cs.bris.ac.uk

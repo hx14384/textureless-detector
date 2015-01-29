@@ -1,0 +1,45 @@
+University of Bristol
+Visual Information Laboratory
+
+Bristol's Real-Time Texture-less Multi-Object Detector: A Scalable Approach
+v 1.1 - May 2013
+
+----------------------------------
+
+Introduction:
+
+The multi-object-detection package enables you to learn multiple texture-less objects in real-time and use the codebook to recognise these objects at multiple frames per second.
+
+For further details, using the code or comparing your method, kindly cite:
+*****************************************************************************
+*****************************************************************************
+***   Dima Damen, Pished Bunnun, Andrew Calway and Walterio Mayol-Cuevas  ***
+***   Real-time Learning and Detection of 3D Texture-less Objects:        ***
+***   A Scalable Approach.						  ***
+***   In. Proc. of. British Machine Vision Conference (BMVC), 2012.       ***
+*****************************************************************************
+*****************************************************************************
+
+-------
+This file details the structure of the published messages:
+
+In /<some path>/ros/MultiObjectDetector/mod/mod_base/msg you can find the details of the message files
+
+/MultiObjectDetector/detectedObjects is of type mod_base/DetectedObjectArray
+
+DetectedObjectArray.msg:
+
+Header header
+mod_base/DetectedObject[] objects
+
+DetectedObject.msg:
+
+uint8 objClass
+sensor_msgs/RegionOfInterest roi
+mod_base/DetectedObjectEdgePoint[] points
+
+DetectedObjectEdgePoint.msg:
+
+uint8 x
+uint8 y
+
