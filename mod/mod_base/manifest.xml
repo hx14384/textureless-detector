@@ -1,0 +1,34 @@
+<package>
+  <description brief="mod_base">
+
+     mod_base
+
+  </description>
+  <author>D Damen</author>
+  <license url="../BristolLicense.txt">BristolUni</license>
+  <review status="unreviewed" notes=""/>
+
+  <depend package="sensor_msgs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="nodelet"/>
+  <depend package="cv_bridge"/>
+  <depend package="image_geometry"/>
+  <depend package="message_filters"/>
+  <depend package="TooN"/>
+  <depend package="tag"/>
+  <depend package="gvars3"/>
+  <depend package="cvd"/>
+  <rosdep name="opencv2.3"/>
+
+  <export>
+    <cpp cflags="-I${prefix}/include -I${prefix}/src" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lmod_nodelets" />
+    <nodelet plugin="${prefix}/nodelets.xml" />
+  </export> 
+
+  <export>
+    <cpp cflags="-I${prefix}/msg/cpp"/>
+  </export>
+
+</package>
+
+

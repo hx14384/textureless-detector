@@ -1,0 +1,35 @@
+<launch>
+
+  <arg name="manager" value="cognito_nodelet_manager" />
+
+  <arg name="method" value="load" />
+
+  <arg name="debug" default="false" />
+  <arg if="$(arg debug)" name="launch_prefix" value="xterm -e gdb --args" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+
+  <node pkg="nodelet" type="nodelet" name="$(arg manager)" args="manager"
+        output="screen" launch-prefix="$(arg launch_prefix)">
+    <param name="num_worker_threads" value="20" />
+  </node>
+
+  <include file="$(find openni_launch)/launch/openni.launch">
+    <!-- Nodelet manager settings -->
+    <arg name="debug" value="false" />
+    <arg name="depth_registration" value="true" />
+    <arg name="rgb_camera_info_url" value="file://${ROS_HOME}/camera_info/rgb_BBIWBDA00006.yaml" />
+    <arg name="depth_camera_info_url" value="file://${ROS_HOME}/camera_info/depth_BBIWBDA00006.yaml" />
+  </include>
+
+  <node pkg="nodelet" type="nodelet" name="MultiObjDetector" args="$(arg method) mod_base/MultiObjDetectorNodelet $(arg manager)">
+    <param name="rgb_image" value="/camera/rgb/image_rect_color" />
+    <param name="CodebookFilename" value="$(find mod_base)/result.eod.bin" />
+    <param name="LoadCodebookFilename" value="$(find mod_base)/clean.eod.bin" />
+    <param name="Interface" value="SHOW" />
+    <param name="PublishResults" value="PUBLISH" /> <!-- PUBLISH, NOPUBLISH -->
+    <param name="WriteToFile" value="" /> <!-- a file name would result in the detections outputted to a file -->
+    <param name="ImageSize" value="VGA" />
+    <param name="LearnObjNo" value="obj0" />
+  </node>
+
+</launch>

@@ -1,0 +1,8 @@
+<!-- Nodelet publisher -->
+<library path="lib/libmod_nodelets">
+	<class name="mod_base/MultiObjDetectorNodelet" type="MultiObjDetectorNodelet" base_class_type="nodelet::Nodelet"> 
+		<description>
+			Trying to run the multi-object detector
+        	</description>
+	</class>
+</library>

@@ -1,0 +1,20 @@
+<package>
+  <description brief="tag">
+
+     Wrapper to install tag libraries
+
+  </description>
+  <author>Ethan Eade, Gerhard Reitmayr and Ed Rosten. ROS wrapper package by Andrew Gee.</author>
+  <license>LGPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://www.edwardrosten.com/cvd/tag.html</url>
+  
+  <depend package="TooN"/>
+  
+  <export>
+    <cpp cflags="-I${prefix}/include/" lflags="-L${prefix}/lib/ -Wl,-rpath,${prefix}/lib/ -ltoontag" />
+  </export>
+
+</package>
+
+

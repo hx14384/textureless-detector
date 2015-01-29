@@ -1,0 +1,12 @@
+dc1394:
+  ubuntu: libdc1394-22-dev
+jpeg:
+  ubuntu: libjpeg62-dev
+png:
+  ubuntu: libpng12-dev
+tiff:
+  ubuntu: libtiff4-dev
+fltk:
+  ubuntu: libfltk1.1-dev
+readline:
+  ubuntu: libreadline6-dev

@@ -1,0 +1,17 @@
+<package>
+  <description brief="TooN">
+
+     Wrapper to install TooN
+
+  </description>
+  <author>Tom Drummond and others. ROS wrapper package by Andrew Gee.</author>
+  <license>Modified GPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://www.edwardrosten.com/cvd/toon.html</url>
+  
+  <export>
+    <cpp cflags="-I${prefix}/include/" />
+  </export>
+
+</package>
+

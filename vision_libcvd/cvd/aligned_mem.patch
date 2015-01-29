@@ -1,0 +1,11 @@
+--- cvd/internal/aligned_mem.h
++++ cvd/internal/aligned_mem.h
+@@ -106,7 +106,7 @@
+ 		template <class T>
+ 		inline void aligned_free(T * memory, size_t count){
+ 			placement_delete<T>::free(memory, count);   
+-			aligned_free(memory);
++			Internal::aligned_free(memory);
+ 		}
+ 
+ 	} // namespace Internal

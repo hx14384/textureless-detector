@@ -1,0 +1,4 @@
+- git:
+    local-name: mod
+    uri: file:///home/staff/damen/ubuntu/git_repositories/mod.git
+    version: master

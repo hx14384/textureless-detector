@@ -1,0 +1,10 @@
+--- gvars3/serialize.h
++++ gvars3/serialize.h
+@@ -26,6 +26,7 @@
+ #include <string>
+ #include <vector>
+ #include <sstream>
++#include <cstdio>
+ 
+ namespace GVars3
+ {

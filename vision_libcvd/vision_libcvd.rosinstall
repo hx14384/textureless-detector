@@ -1,0 +1,4 @@
+- git:
+   local-name: vision_libcvd
+   uri: file:///home/pgrad/gee/linux/repos/ros/vision_libcvd.git
+   version: master

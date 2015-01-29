@@ -1,0 +1,37 @@
+<launch>
+
+  <arg name="manager" value="cognito_nodelet_manager" />
+
+  <arg name="method" value="load" />
+
+  <arg name="debug" default="false" />
+  <arg if="$(arg debug)" name="launch_prefix" value="xterm -e gdb --args" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+
+  <node pkg="nodelet" type="nodelet" name="$(arg manager)" args="manager"
+        output="screen" launch-prefix="$(arg launch_prefix)">
+    <param name="num_worker_threads" value="20" />
+  </node>
+ 
+  <node pkg="camera1394" type="camera1394_node" name="camera1394_node">
+     <param name="guid" value="08144361026300fd" />
+     <param name="video_mode" value="640x480_yuv411" />
+     <param name="use_ros_time" value="True" />
+     <param name="frame_id" value="unibrain" />
+     <param name="camera_info_url" value="file:///home/cognito2/ros/.ros/camera_info/08144361026300fd.yaml" />
+  </node>
+
+  <node ns="camera" pkg="image_proc" type="image_proc" name="image_proc" />
+
+  <node pkg="nodelet" type="nodelet" name="MultiObjDetector" args="$(arg method) mod_base/MultiObjDetectorNodelet $(arg manager)">
+    <param name="rgb_image" value="/camera/image_rect_color" />
+    <param name="CodebookFilename" value="$(find mod_base)/result.eod.bin" />
+    <param name="LoadCodebookFilename" value="$(find mod_base)/clean.eod.bin" />
+    <param name="Interface" value="SHOW" /> <!-- SHOW, NOSHOW -->
+    <param name="PublishResults" value="PUBLISH" /> <!-- PUBLISH, NOPUBLISH -->
+    <param name="WriteToFile" value="" /> <!-- a file name would result in the detections outputted to a file -->
+    <param name="ImageSize" value="VGA" /> <!-- SXGA, VGA -->
+    <param name="LearnObjNo" value="obj0" /> <!-- objects from 0 to 29 -->
+  </node>
+
+</launch>

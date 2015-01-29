@@ -1,0 +1,13 @@
+<stack>
+  <description brief="mod">mod</description>
+  <author>Maintained by D Damen</author>
+  <license url="BristolLicense.txt">BristolUni</license>  
+  <review status="unreviewed" notes=""/>
+  <depend stack="common" /> <!-- nodelet -->
+  <depend stack="common_msgs" /> <!-- stereo_msgs, sensor_msgs -->
+  <depend stack="ros_comm" /> <!-- message_filters -->
+  <depend stack="vision_opencv" /> <!-- cv_bridge, image_geometry -->
+  <depend stack="vision_libcvd" /> <!-- cvd, TooN, tag, gvars3 -->
+  <depend stack="geometry" /> <!-- eigen, tf -->
+  <depend stack="ros" />
+</stack>

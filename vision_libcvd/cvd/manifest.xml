@@ -1,0 +1,25 @@
+<package>
+  <description brief="cvd">
+
+     Wrapper to install cvd libraries
+
+  </description>
+  <author>Ed Rosten and others. ROS wrapper package by Andrew Gee.</author>
+  <license>LGPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://www.edwardrosten.com/cvd/</url>
+  
+  <depend package="TooN"/>
+  
+  <rosdep name="dc1394"/>
+  <rosdep name="jpeg"/>
+  <rosdep name="png"/>
+  <rosdep name="tiff"/>
+  
+  <export>
+    <cpp cflags="-I${prefix}/include/" lflags="-L${prefix}/lib/ -Wl,-rpath,${prefix}/lib/ -lcvd -lcvd_debug" />
+  </export>
+
+</package>
+
+

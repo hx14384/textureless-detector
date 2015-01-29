@@ -1,0 +1,12 @@
+<stack>
+  <description brief="vision_libcvd">
+  	
+     Set of wrappers to install libcvd library and its dependencies.
+  		
+  </description>
+  <author>Maintained by A Gee</author>
+  <license>LGPL, Modified GPL</license>  
+  <review status="unreviewed" notes=""/>
+  <url>http://www.edwardrosten.com/cvd/</url>
+
+</stack>
